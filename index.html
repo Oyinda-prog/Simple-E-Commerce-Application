@@ -5,10 +5,84 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
-<body>
-    <script>
+<body onload="loady()"> 
+    <div class="container-fluid ">
+          <div class="col-lg-5 mx-auto col-sm-12">
         
+          <input type="text" class="my-3" id="nameofProduct" class="form-control w-50" placeholder="Enter Product">
+          <input type="number" id="Amount" class="form-control w-50 my-3" placeholder="Enter Amount">
+          <input type="text" id="Quantity" class="form-control w-50 my-3" placeholder="Enter Quantity">
+          <button class="btn btn-primary" onclick="addtoCart()">Add to Cart</button>
+          <div id="disp"></div>
+          </div>   
+    </div>
+    <div class="container pt-5">
+    <table id="display" class="table table-striped">
+        <tr>
+            <td>S/N</td>
+            <td>Product</td>
+            <td>Amount</td>
+            <td>Quantity</td>
+            <td>Total Amount</td>
+            <td>Actions</td>
+
+        </tr>
+    </table>
+</div>
+
+    
+    <script>
+        var allCart=[]
+        if(localStorage.carty){
+            var allCart=JSON.parse(localStorage.getItem("carty"))
+        }
+         const addtoCart=()=>{
+            if(nameof.value=="" ||Amount.value=="" ||Quantity.value=="" ){
+                disp.innerHTML="Please, enter details"
+            }else{
+
+                var cart={
+                 name: nameof.value,
+                 amount: "$" + Amount.value,
+                 quantity:Quantity.value,
+                 totalQuantity:"$"+ Amount.value*Quantity.value
+                }
+                allCart.push(cart)
+                console.log(allCart);
+                localStorage.setItem("carty",JSON.stringify(allCart))
+                loady()
+            }
+
+         }
+
+         const loady=()=>{
+            display.innerHTML=""
+            for (let index = 0; index < allCart.length; index++) {
+                display.innerHTML+=`
+                <tr>
+            <td>${index+1}</td>
+            <td> ${allCart[index].name}Product</td>
+            <td>${allCart[index].amount}</td>
+            <td>${allCart[index].quantity}</td>
+            <td>${allCart[index].totalQuantity}</td>
+            <td>
+            <button onclick="delety(${index})" class="btn btn-danger">Delete</button>
+            <<button onclick="edity(${index})" class="btn btn-danger">Edit</button>
+            </tr>
+        
+                `
+                
+                
+            }
+         }
+         const delety=(indexPar)=>{
+           allCart.splice(indexPar,1)
+           localStorage.setItem("carty",JSON.stringify(allCart))
+                 loady()
+         }
     </script>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </html>
